@@ -1,11 +1,16 @@
-package com.alkastor.crowd.model;
+package com.alkastor.crowd.impl;
+
+import com.alkastor.crowd.CreateModel;
+import com.alkastor.crowd.calculation.Direct;
+import com.alkastor.crowd.model.Ball;
+import com.alkastor.crowd.model.Cell;
 
 import java.awt.*;
 import java.util.Random;
 
-public class CreateModel implements ICreateModel {
+public class CreateModelImpl implements CreateModel {
 
-    public CreateModel(Model model) {
+    public CreateModelImpl(Model model) {
         this.model = model;
         Direct.clear_v_direct(model.cells, model.nx, model.ny);
     }

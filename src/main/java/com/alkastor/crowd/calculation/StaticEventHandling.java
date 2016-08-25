@@ -1,4 +1,6 @@
-package com.alkastor.crowd.model;
+package com.alkastor.crowd.calculation;
+
+import com.alkastor.crowd.model.Ball;
 
 public final class StaticEventHandling {
 

@@ -1,14 +1,18 @@
-package com.alkastor.crowd.model;
+package com.alkastor.crowd.impl;
+
+import com.alkastor.crowd.EventHandling;
+import com.alkastor.crowd.calculation.StaticEventHandling;
+import com.alkastor.crowd.model.Ball;
 
 import java.util.Random;
 
-public class EventHeadling implements IEventHendling {
+public class EventHandlingImpl implements EventHandling {
 
-    public EventHeadling(Model model) {
+    public EventHandlingImpl(Model model) {
         this.model = model;
     }
 
-    public void HendlineCollisionExPartsOutside(Ball ic) {
+    public void handleCollisionExPartsOutside(Ball ic) {
         Ball jc = model.balls[ic.next];
         if (jc.event == 1 && jc.next == ic.id) {
             model.T = ic.t;
@@ -20,7 +24,7 @@ public class EventHeadling implements IEventHendling {
         model.reCalculs(ic, jc);
     }
 
-    public void HendlineCollisionExPartsInside(Ball ic) {
+    public void handleCollisionExPartsInside(Ball ic) {
         Ball jc = model.balls[ic.next];
         if (jc.event == 2 && jc.next == ic.id) {
             model.T = ic.t;
@@ -31,7 +35,7 @@ public class EventHeadling implements IEventHendling {
         model.reCalculs(ic, jc);
     }
 
-    public void HendlineCollisionKernels(Ball ic) {
+    public void handleCollisionKernels(Ball ic) {
         Ball jc = model.balls[ic.next];
         if (jc.event == 3 && jc.next == ic.id) {
             model.T = ic.t;
@@ -42,7 +46,7 @@ public class EventHeadling implements IEventHendling {
         model.reCalculs(ic, jc);
     }
 
-    public void HendlineCrossing(Ball ic) {
+    public void handleneCrossing(Ball ic) {
         int inew, jnew;
         model.T = ic.t;
         ic.move();

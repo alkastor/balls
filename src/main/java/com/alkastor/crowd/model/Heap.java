@@ -1,5 +1,7 @@
 package com.alkastor.crowd.model;
 
+import com.alkastor.crowd.impl.Model;
+
 public class Heap {
     public Heap(Model model) {
         this.model = model;
@@ -24,10 +26,10 @@ public class Heap {
         do {
             if (i % 2 == 0) {
                 i_sosed = i - 1;
-                per = (int) (i_sosed / 2);
+                per = i_sosed / 2;
             } else {
                 i_sosed = i + 1;
-                per = (int) (i / 2);
+                per = i / 2;
             }
             if (model.balls[tree[i]].t <= model.balls[tree[i_sosed]].t)
                 tree[per] = tree[i];

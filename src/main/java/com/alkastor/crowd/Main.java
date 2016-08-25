@@ -1,4 +1,4 @@
-package com.alkastor.crowd.main;
+package com.alkastor.crowd;
 
 import com.alkastor.crowd.gui.MainFrame;
 

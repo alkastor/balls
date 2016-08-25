@@ -1,9 +1,8 @@
 package com.alkastor.crowd.model;
 
 public class Event {
-    int ic;
-    int jc;
-    int type;
-    double t;
-
+    public int ic;
+    public int jc;
+    public int type;
+    public double t;
 }

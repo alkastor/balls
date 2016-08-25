@@ -1,4 +1,12 @@
-package com.alkastor.crowd.model;
+package com.alkastor.crowd.impl;
+
+import com.alkastor.crowd.CreateModel;
+import com.alkastor.crowd.EventHandling;
+import com.alkastor.crowd.EventTime;
+import com.alkastor.crowd.calculation.Direct;
+import com.alkastor.crowd.model.Ball;
+import com.alkastor.crowd.model.Cell;
+import com.alkastor.crowd.model.Heap;
 
 import java.util.Random;
 
@@ -6,9 +14,9 @@ import java.util.Random;
 public class Model {
 
     public Model() {
-        CreateBalls = new CreateModel(Model.this);
-        EventRespos = new EventHeadling(Model.this);
-        EventSearch = new EventTime(Model.this);
+        CreateBalls = new CreateModelImpl(Model.this);
+        EventRespos = new EventHandlingImpl(Model.this);
+        EventSearch = new EventTimeImpl(Model.this);
         T = 0;
     }
 
@@ -48,13 +56,13 @@ public class Model {
     public void simulate() {
         int id = heap.GetMin();
         if (balls[id].event == 1) {
-            EventRespos.HendlineCollisionExPartsOutside(balls[id]);
+            EventRespos.handleCollisionExPartsOutside(balls[id]);
         } else if (balls[id].event == 2) {
-            EventRespos.HendlineCollisionExPartsInside(balls[id]);
+            EventRespos.handleCollisionExPartsInside(balls[id]);
         } else if (balls[id].event == 3) {
-            EventRespos.HendlineCollisionKernels(balls[id]);
+            EventRespos.handleCollisionKernels(balls[id]);
         } else if (balls[id].event == 11) {
-            EventRespos.HendlineCrossing(balls[id]);
+            EventRespos.handleneCrossing(balls[id]);
         }
         if (Direct.is_speed)
             correct_speed(id);
@@ -116,9 +124,9 @@ public class Model {
     public double T;
     public double t_stack;
 
-    private IEventHendling EventRespos;
-    private IEventTime EventSearch;
-    private ICreateModel CreateBalls;
+    private EventHandling EventRespos;
+    private EventTime EventSearch;
+    private CreateModel CreateBalls;
     private Heap heap;
     private Random rm = new Random();
 }

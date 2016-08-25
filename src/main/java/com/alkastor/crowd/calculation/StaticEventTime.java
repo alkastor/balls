@@ -1,4 +1,7 @@
-package com.alkastor.crowd.model;
+package com.alkastor.crowd.calculation;
+
+import com.alkastor.crowd.model.Ball;
+import com.alkastor.crowd.model.Event;
 
 public final class StaticEventTime {
     public static void CollisionWithCellTime(Ball ic) {

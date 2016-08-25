@@ -1,7 +1,7 @@
 package com.alkastor.crowd.gui;
 
-import com.alkastor.crowd.model.Direct;
-import com.alkastor.crowd.model.Model;
+import com.alkastor.crowd.calculation.Direct;
+import com.alkastor.crowd.impl.Model;
 
 import javax.swing.*;
 import java.awt.*;

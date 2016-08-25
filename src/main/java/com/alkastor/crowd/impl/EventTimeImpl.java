@@ -1,7 +1,12 @@
-package com.alkastor.crowd.model;
+package com.alkastor.crowd.impl;
 
-public class EventTime implements IEventTime {
-    public EventTime(Model model) {
+import com.alkastor.crowd.EventTime;
+import com.alkastor.crowd.calculation.StaticEventTime;
+import com.alkastor.crowd.model.Ball;
+import com.alkastor.crowd.model.Event;
+
+public class EventTimeImpl implements EventTime {
+    public EventTimeImpl(Model model) {
         this.model = model;
     }
 
