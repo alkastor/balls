@@ -6,13 +6,17 @@ import com.alkastor.crowd.model.Ball;
 import com.alkastor.crowd.model.Event;
 
 public class EventTimeImpl implements EventTime {
+    private Event ev = new Event();
+    private Event t;
+    private Model model;
+
     public EventTimeImpl(Model model) {
         this.model = model;
     }
 
     public void getEventTime(Ball ic) {
         ev.t = 1e10;
-        StaticEventTime.CollisionWithCellTime(ic);
+        StaticEventTime.collisionWithCellTime(ic);
         int imax, imin, jmin, jmax;
         imin = ic.i - 1;
         if (imin < 0) imin = 0;
@@ -29,12 +33,12 @@ public class EventTimeImpl implements EventTime {
                     int j = model.cells[ii][jj].balls[m];
                     if (i != j) {
                         if (model.balls[i].t_loc <= model.balls[j].t_loc) {
-                            withNotSosed(ic, model.balls[j]);
+                            withNotNeighbor(ic, model.balls[j]);
                             if (ev.t >= t.t) {
                                 ev = t;
                             }
                         } else {
-                            withNotSosed(model.balls[j], ic);
+                            withNotNeighbor(model.balls[j], ic);
                             if (ev.t >= t.t) {
                                 ev = t;
                             }
@@ -53,11 +57,7 @@ public class EventTimeImpl implements EventTime {
         }
     }
 
-    private void withNotSosed(Ball ic, Ball jc) {
-        t = StaticEventTime.CollisionWithBallOutsideTime(ic, jc, ic.r1 + jc.r1);
+    private void withNotNeighbor(Ball ic, Ball jc) {
+        t = StaticEventTime.collisionWithBallOutsideTime(ic, jc, ic.r1 + jc.r1);
     }
-
-    Event ev = new Event();
-    Event t;
-    Model model;
 }

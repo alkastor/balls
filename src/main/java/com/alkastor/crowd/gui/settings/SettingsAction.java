@@ -1,16 +1,15 @@
-package com.alkastor.crowd.gui;
+package com.alkastor.crowd.gui.settings;
+
+import com.alkastor.crowd.gui.MainFrame;
 
 import javax.swing.*;
 import java.awt.event.ActionEvent;
 
 public class SettingsAction extends AbstractAction {
 
-    /**
-     *
-     */
     private static final long serialVersionUID = 1L;
 
-    public MainFrame mainFrame;
+    private MainFrame mainFrame;
 
     public SettingsAction(MainFrame mainFrame) {
         super("settings");
@@ -18,8 +17,6 @@ public class SettingsAction extends AbstractAction {
     }
 
     public void actionPerformed(ActionEvent e) {
-        // TODO Auto-generated method stub
         new SettingsDialog(mainFrame);
     }
-
 }

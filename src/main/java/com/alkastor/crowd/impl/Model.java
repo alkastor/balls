@@ -10,14 +10,27 @@ import com.alkastor.crowd.model.Heap;
 
 import java.util.Random;
 
-
 public class Model {
 
+    public int nx;
+    public int ny;
+    public Ball[] balls;
+    public Cell[][] cells;
+
+    public int N;
+    public double T;
+    public double t_stack;
+
+    private EventHandling eventHandling;
+    private EventTime eventTime;
+    private CreateModel createModel;
+    private Heap heap;
+    private Random rm = new Random();
+
     public Model() {
-        CreateBalls = new CreateModelImpl(Model.this);
-        EventRespos = new EventHandlingImpl(Model.this);
-        EventSearch = new EventTimeImpl(Model.this);
-        T = 0;
+        createModel = new CreateModelImpl(Model.this);
+        eventHandling = new EventHandlingImpl(Model.this);
+        eventTime = new EventTimeImpl(Model.this);
     }
 
     public void initialize() {
@@ -29,23 +42,18 @@ public class Model {
                 cells[i][j] = new Cell();
             }
         }
-        balls = CreateBalls.GetBalls(cells);
+        balls = createModel.GetBalls(cells);
         heap = new Heap(Model.this);
         for (int i = 1; i < N; i++) {
-            EventSearch.getEventTime(balls[i]);
-            heap.InsertBall(i);
+            eventTime.getEventTime(balls[i]);
+            heap.insertBall(i);
         }
-        /*for(int i = 1; i<N; i++)
-		{
-			EventSearch.getEventTime(balls[i]);
-			heap.InsertBall(i);
-		}*/
     }
 
     public void reCalculs(Ball ic) {
-        EventSearch.getEventTime(ic);
-        heap.InsertBall(ic.next);
-        heap.InsertBall(ic.id);
+        eventTime.getEventTime(ic);
+        heap.insertBall(ic.next);
+        heap.insertBall(ic.id);
     }
 
     public void reCalculs(Ball ic, Ball jc) {
@@ -54,15 +62,15 @@ public class Model {
     }
 
     public void simulate() {
-        int id = heap.GetMin();
+        int id = heap.getMin();
         if (balls[id].event == 1) {
-            EventRespos.handleCollisionExPartsOutside(balls[id]);
+            eventHandling.handleCollisionExPartsOutside(balls[id]);
         } else if (balls[id].event == 2) {
-            EventRespos.handleCollisionExPartsInside(balls[id]);
+            eventHandling.handleCollisionExPartsInside(balls[id]);
         } else if (balls[id].event == 3) {
-            EventRespos.handleCollisionKernels(balls[id]);
+            eventHandling.handleCollisionKernels(balls[id]);
         } else if (balls[id].event == 11) {
-            EventRespos.handleneCrossing(balls[id]);
+            eventHandling.handleneCrossing(balls[id]);
         }
         if (Direct.is_speed)
             correct_speed(id);
@@ -110,23 +118,9 @@ public class Model {
         balls[ib].j = (int) y;
         balls[ib].vx = Math.sin(fi) * Math.cos(fj) * (1 / Math.sqrt(balls[ib].massa));
         balls[ib].vy = Math.cos(fi) * Math.cos(fj) * (1 / Math.sqrt(balls[ib].massa));
-        balls[ib].numSosed = 0;
+        balls[ib].numNeighbor = 0;
         balls[ib].t_loc = T;
         balls[ib].t = 10e20;
         cells[balls[ib].i][balls[ib].j].addBall(ib);
     }
-
-    public int nx, ny, nz;
-    public Ball[] balls;
-    public Cell[][] cells;
-
-    public int N;
-    public double T;
-    public double t_stack;
-
-    private EventHandling EventRespos;
-    private EventTime EventSearch;
-    private CreateModel CreateBalls;
-    private Heap heap;
-    private Random rm = new Random();
 }

@@ -4,7 +4,18 @@ import com.alkastor.crowd.model.Ball;
 import com.alkastor.crowd.model.Event;
 
 public final class StaticEventTime {
-    public static void CollisionWithCellTime(Ball ic) {
+    private static double x1, x2, y1, y2;
+    private static double vx1, vx2, vy1, vy2;
+    private static double dt;
+    private static double dx, dy, dvx, dvy;
+    private static double A;
+    private static double B;
+    private static double C;
+    private static double D;
+    private static double dt1, dt2;
+    private static double sqrt_D;
+
+    public static void collisionWithCellTime(Ball ic) {
         double dt = 1e10;
         int mt = 0;
         double dtmin = 1e10;
@@ -55,17 +66,17 @@ public final class StaticEventTime {
         C = dx * dx + dy * dy - L * L;
     }
 
-    public static void CollisionWithSosed(Ball ic, Ball jc, double L) {
+    public static void collisionWithSosed(Ball ic, Ball jc, double L) {
         setParams(ic, jc, L);
         double sigma = -B;
         if (sigma > 0) {
-            CollisionWithBallInsideTime(ic, jc, L);
+            collisionWithBallInsideTime(ic, jc, L);
         } else {
-            CollisionWithKernelsTime(ic, jc, L);
+            collisionWithKernelsTime(ic, jc, L);
         }
     }
 
-    public static Event CollisionWithBallOutsideTime(Ball ic, Ball jc, double L) {
+    public static Event collisionWithBallOutsideTime(Ball ic, Ball jc, double L) {
         Event ev = new Event();
         ev.type = 1;
         ev.jc = jc.id;
@@ -98,7 +109,7 @@ public final class StaticEventTime {
         return ev;
     }
 
-    public static Event CollisionWithKernelsTime(Ball ic, Ball jc, double L) {
+    public static Event collisionWithKernelsTime(Ball ic, Ball jc, double L) {
         Event ev = new Event();
         ev.type = 1;
         ev.jc = jc.id;
@@ -132,7 +143,7 @@ public final class StaticEventTime {
         return ev;
     }
 
-    public static Event CollisionWithBallInsideTime(Ball ic, Ball jc, double L) {
+    public static Event collisionWithBallInsideTime(Ball ic, Ball jc, double L) {
         Event ev = new Event();
         ev.type = 1;
         ev.jc = jc.id;
@@ -160,16 +171,4 @@ public final class StaticEventTime {
         }
         return ev;
     }
-
-    private static double x1, x2, y1, y2;
-    private static double vx1, vx2, vy1, vy2;
-    private static double dt;
-    private static double dx, dy, dvx, dvy;
-    private static double A;
-    private static double B;
-    private static double C;
-    private static double D;
-    private static double dt1, dt2;
-    private static double sqrt_D;
-
 }
