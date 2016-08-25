@@ -49,7 +49,7 @@ public class EventHandlingImpl implements EventHandling {
         model.reCalculs(ic, jc);
     }
 
-    public void handleneCrossing(Ball ic) {
+    public void handleCrossing(Ball ic) {
         int inew, jnew;
         model.T = ic.t;
         ic.move();
