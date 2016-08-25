@@ -7,7 +7,7 @@ public final class StaticEventHandling {
     private static double dx, dy, dvx, dvy;
     private static double drr, dvr;
 
-    public static void ElasticReflection(Ball ic, Ball jc) {
+    public static void elasticReflection(Ball ic, Ball jc) {
         setParam(ic, jc);
         double d_lambd, d_lambd_ic, d_lambd_jc;
         d_lambd = 2 * dvr / ((ic.massa + jc.massa) * drr);
@@ -19,7 +19,7 @@ public final class StaticEventHandling {
         jc.vy -= d_lambd_jc * dy;
     }
 
-    public static boolean ReflectionWithBarrierOutside(Ball ic, Ball jc, double u1, double u2, double b2) {
+    public static boolean reflectionWithBarrierOutside(Ball ic, Ball jc, double u1, double u2, double b2) {
         setParam(ic, jc);
         double Umax;
         Umax = Math.max(u1, u2) + b2;
@@ -38,12 +38,12 @@ public final class StaticEventHandling {
             jc.vy -= (ic.massa / (ic.massa + jc.massa)) * div * dy;
             return true;
         } else {
-            ElasticReflection(ic, jc);
+            elasticReflection(ic, jc);
         }
         return false;
     }
 
-    public static boolean ReflectionWithBarrierInside(Ball ic, Ball jc, double u1, double u2, double b2) {
+    public static boolean reflectionWithBarrierInside(Ball ic, Ball jc, double u1, double u2, double b2) {
         setParam(ic, jc);
         double Umax;
         Umax = Math.max(u1, u2) + b2;
@@ -62,7 +62,7 @@ public final class StaticEventHandling {
             jc.vy -= (ic.massa / (ic.massa + jc.massa)) * div * dy;
             return true;
         } else {
-            ElasticReflection(ic, jc);
+            elasticReflection(ic, jc);
         }
         return false;
     }
@@ -77,7 +77,7 @@ public final class StaticEventHandling {
     }
 
     @SuppressWarnings("unused")
-    private static boolean isSosed2(Ball ic, Ball jc) {
+    private static boolean isNeighbor2(Ball ic, Ball jc) {
         for (int i = 0; i < ic.numNeighbor; i++) {
             for (int j = 0; j < jc.numNeighbor; j++) {
                 if (ic.neighbors[i] == jc.neighbors[j]) {

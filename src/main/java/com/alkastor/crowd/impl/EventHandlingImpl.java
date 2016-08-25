@@ -22,7 +22,7 @@ public class EventHandlingImpl implements EventHandling {
             ic.move();
             jc.move();
 
-            StaticEventHandling.ElasticReflection(ic, jc);
+            StaticEventHandling.elasticReflection(ic, jc);
         }
         model.reCalculs(ic, jc);
     }
@@ -33,7 +33,7 @@ public class EventHandlingImpl implements EventHandling {
             model.T = ic.t;
             ic.move();
             jc.move();
-            StaticEventHandling.ElasticReflection(ic, jc);
+            StaticEventHandling.elasticReflection(ic, jc);
         }
         model.reCalculs(ic, jc);
     }
@@ -44,7 +44,7 @@ public class EventHandlingImpl implements EventHandling {
             model.T = ic.t;
             ic.move();
             jc.move();
-            StaticEventHandling.ElasticReflection(ic, jc);
+            StaticEventHandling.elasticReflection(ic, jc);
         }
         model.reCalculs(ic, jc);
     }
