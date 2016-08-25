@@ -10,17 +10,14 @@ import java.util.Random;
 
 public class CreateModelImpl implements CreateModel {
 
+    private Model model;
+    private Ball[] balls;
+    private Random rm = new Random();
+
     public CreateModelImpl(Model model) {
         this.model = model;
         Direct.clear_v_direct(model.cells, model.nx, model.ny);
     }
-
-    int i = 1;
-    double roO2;
-    double roH2;
-    Ball[] balls;
-    Ball[] fballs;
-    Random rm = new Random();
 
     public Ball[] GetBalls(Cell[][] cells) {
         model.N++;
@@ -53,7 +50,7 @@ public class CreateModelImpl implements CreateModel {
             fj = c * 2 * Math.PI;
             balls[i].vx = Math.sin(fi) * Math.cos(fj) * (1 / Math.sqrt(balls[i].massa));
             balls[i].vy = Math.cos(fi) * Math.cos(fj) * (1 / Math.sqrt(balls[i].massa));
-            balls[i].numSosed = 0;
+            balls[i].numNeighbor = 0;
             balls[i].color = Color.orange;
             cells[balls[i].i][balls[i].j].addBall(i);
             x += 1;
@@ -68,8 +65,6 @@ public class CreateModelImpl implements CreateModel {
     private boolean check(int i, int j, Cell[][] cells) {
         return cells[i][j].numBalls > 0;
     }
-
-    Model model;
 
     public Ball[] GetMaze(Cell[][] cells) {
         balls = GetBalls(cells);
@@ -93,7 +88,7 @@ public class CreateModelImpl implements CreateModel {
             balls[i].event = 0;
             balls[i].vx = 0;
             balls[i].vy = 0;
-            balls[i].numSosed = 0;
+            balls[i].numNeighbor = 0;
             balls[i].color = Color.green;
             balls[i].fixed = true;
             cells[balls[i].i][balls[i].j].addBall(i);

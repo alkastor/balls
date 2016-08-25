@@ -1,26 +1,32 @@
 package com.alkastor.crowd.gui;
 
 import com.alkastor.crowd.calculation.Direct;
+import com.alkastor.crowd.gui.settings.SettingsAction;
 import com.alkastor.crowd.impl.Model;
 
 import javax.swing.*;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 
 public class MainFrame extends JFrame {
-    private static final long serialVersionUID = 1L;
+    public Model model;
+    public Timer timer;
+    public Compp comp;
 
+    private static final long serialVersionUID = 1L;
     private JMenuBar mainMenu = new JMenuBar();
     private JMenu menu = new JMenu("menu");
     private Action showSettings = new SettingsAction(MainFrame.this);
+
     private JMenuItem settings = new JMenuItem(showSettings);
 
     public MainFrame() {
-        setSize(300, 300);
+        setSize(Toolkit.getDefaultToolkit().getScreenSize());
         setLocationByPlatform(true);
         setVisible(true);
-        setDefaultCloseOperation(EXIT_ON_CLOSE);
+        setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         mainMenu.add(menu);
         menu.add(settings);
         model = new Model();
@@ -42,8 +48,4 @@ public class MainFrame extends JFrame {
         add(comp);
         setJMenuBar(mainMenu);
     }
-
-    public Model model;
-    public Timer timer;
-    public Compp comp;
 }

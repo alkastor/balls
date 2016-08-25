@@ -9,6 +9,8 @@ import java.awt.*;
 @SuppressWarnings("serial")
 public class Compp extends JComponent {
 
+    private Model model;
+
     public Compp(Model model) {
         this.model = model;
     }
@@ -44,6 +46,4 @@ public class Compp extends JComponent {
         }
         g.drawImage(buf, 0, 0, null);
     }
-
-    Model model;
 }

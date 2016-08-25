@@ -6,6 +6,10 @@ import com.alkastor.crowd.model.Ball;
 import com.alkastor.crowd.model.Event;
 
 public class EventTimeImpl implements EventTime {
+    private Event ev = new Event();
+    private Event t;
+    private Model model;
+
     public EventTimeImpl(Model model) {
         this.model = model;
     }
@@ -56,8 +60,4 @@ public class EventTimeImpl implements EventTime {
     private void withNotSosed(Ball ic, Ball jc) {
         t = StaticEventTime.CollisionWithBallOutsideTime(ic, jc, ic.r1 + jc.r1);
     }
-
-    Event ev = new Event();
-    Event t;
-    Model model;
 }

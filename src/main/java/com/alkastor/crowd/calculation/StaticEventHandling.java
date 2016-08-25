@@ -4,6 +4,9 @@ import com.alkastor.crowd.model.Ball;
 
 public final class StaticEventHandling {
 
+    private static double dx, dy, dvx, dvy;
+    private static double drr, dvr;
+
     public static void ElasticReflection(Ball ic, Ball jc) {
         setParam(ic, jc);
         double d_lambd, d_lambd_ic, d_lambd_jc;
@@ -75,16 +78,13 @@ public final class StaticEventHandling {
 
     @SuppressWarnings("unused")
     private static boolean isSosed2(Ball ic, Ball jc) {
-        for (int i = 0; i < ic.numSosed; i++) {
-            for (int j = 0; j < jc.numSosed; j++) {
-                if (ic.sosedi[i] == jc.sosedi[j]) {
+        for (int i = 0; i < ic.numNeighbor; i++) {
+            for (int j = 0; j < jc.numNeighbor; j++) {
+                if (ic.neighbors[i] == jc.neighbors[j]) {
                     return true;
                 }
             }
         }
         return false;
     }
-
-    private static double dx, dy, dvx, dvy;
-    private static double drr, dvr;
 }

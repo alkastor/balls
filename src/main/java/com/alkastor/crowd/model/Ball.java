@@ -5,32 +5,52 @@ import java.awt.*;
 
 public class Ball {
 
+    public int round;
+    public int heap_id;
+    public double x, y;
+    public double vx, vy, rspeed;
+    public double massa, rmassa;
+    public double r, r0, r1;
+    public int i, j;
+    public int id;
+    public int clas;
+    public int sort;
+    public int type;
+    public double t, t_loc;
+    public int event;
+    public int next;
+    public int valent;
+    public int numNeighbor;
+    public int[] neighbors;
+    public Color color;
+    public Ball prevB;
+    public Ball nextB;
+    public boolean on_stack;
+    public boolean fixed;
+
+
     public Ball() {
-        sosedi = new int[20];
-        numSosed = 0;
+        neighbors = new int[20];
         t = 1e10;
-        t_loc = 0;
     }
 
-
-    public void addSosed(int arg0) {
-        sosedi[numSosed] = arg0;
-        numSosed++;
+    public void addNeighbor(int arg0) {
+        neighbors[numNeighbor] = arg0;
+        numNeighbor++;
     }
 
-    public void delSosed(int arg0) {
-        for (int i0 = 0; i0 < numSosed; i0++) {
-            if (sosedi[i0] == arg0) {
-                numSosed--;
-                sosedi[i0] = sosedi[numSosed];
+    public void delNeighbor(int arg0) {
+        for (int i = 0; i < numNeighbor; i++) {
+            if (neighbors[i] == arg0) {
+                neighbors[i] = neighbors[numNeighbor--];
                 return;
             }
         }
     }
 
-    public boolean isSosed(int jc) {
-        for (int ii = 0; ii < numSosed; ii++) {
-            if (sosedi[ii] == jc) {
+    public boolean isNeighbor(int jc) {
+        for (int i = 0; i < numNeighbor; i++) {
+            if (neighbors[i] == jc) {
                 return true;
             }
         }
@@ -62,27 +82,4 @@ public class Ball {
     public String toString() {
         return t + "";
     }
-
-    public int round;
-    public int heap_id;
-    public double x, y;
-    public double vx, vy, rspeed;
-    public double massa, rmassa;
-    public double r, r0, r1;
-    public int i, j;
-    public int id;
-    public int clas;
-    public int sort;
-    public int type;
-    public double t, t_loc;
-    public int event;
-    public int next;
-    public int valent;
-    public int numSosed;
-    public int[] sosedi;
-    public Color color;
-    public Ball prevB;
-    public Ball nextB;
-    public boolean on_stack;
-    public boolean fixed;
 }

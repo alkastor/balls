@@ -1,6 +1,7 @@
-package com.alkastor.crowd.gui;
+package com.alkastor.crowd.gui.settings;
 
 import com.alkastor.crowd.calculation.Direct;
+import com.alkastor.crowd.gui.MainFrame;
 
 import javax.swing.*;
 import java.awt.*;

@@ -4,6 +4,17 @@ import com.alkastor.crowd.model.Ball;
 import com.alkastor.crowd.model.Event;
 
 public final class StaticEventTime {
+    private static double x1, x2, y1, y2;
+    private static double vx1, vx2, vy1, vy2;
+    private static double dt;
+    private static double dx, dy, dvx, dvy;
+    private static double A;
+    private static double B;
+    private static double C;
+    private static double D;
+    private static double dt1, dt2;
+    private static double sqrt_D;
+
     public static void CollisionWithCellTime(Ball ic) {
         double dt = 1e10;
         int mt = 0;
@@ -160,16 +171,4 @@ public final class StaticEventTime {
         }
         return ev;
     }
-
-    private static double x1, x2, y1, y2;
-    private static double vx1, vx2, vy1, vy2;
-    private static double dt;
-    private static double dx, dy, dvx, dvy;
-    private static double A;
-    private static double B;
-    private static double C;
-    private static double D;
-    private static double dt1, dt2;
-    private static double sqrt_D;
-
 }

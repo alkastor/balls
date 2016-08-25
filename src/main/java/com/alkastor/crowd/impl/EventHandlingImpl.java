@@ -8,6 +8,9 @@ import java.util.Random;
 
 public class EventHandlingImpl implements EventHandling {
 
+    private Model model;
+    private Random rn = new Random();
+
     public EventHandlingImpl(Model model) {
         this.model = model;
     }
@@ -91,7 +94,4 @@ public class EventHandlingImpl implements EventHandling {
         ic.j = jnew;
         model.reCalculs(ic);
     }
-
-    private Model model;
-    private Random rn = new Random();
 }
