@@ -9,5 +9,5 @@ public interface EventHandling {
 
     void handleCollisionKernels(Ball ic);
 
-    void handleneCrossing(Ball ic);
+    void handleCrossing(Ball ic);
 }

@@ -70,7 +70,7 @@ public class Model {
         } else if (balls[id].event == 3) {
             eventHandling.handleCollisionKernels(balls[id]);
         } else if (balls[id].event == 11) {
-            eventHandling.handleneCrossing(balls[id]);
+            eventHandling.handleCrossing(balls[id]);
         }
         if (Direct.is_speed)
             correct_speed(id);
