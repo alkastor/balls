@@ -10,7 +10,7 @@ public class Heap {
     public Heap(Model model) {
         this.model = model;
         n_start = 1;
-        while (n_start < model.N)
+        while (n_start < model.n)
             n_start *= 2;
         n_start--;
         int nt = 2 * n_start + 1;
@@ -18,7 +18,7 @@ public class Heap {
         for (int i = 0; i < nt; i++) {
             tree[i] = 0;
         }
-        for (int i = n_start; i < model.N + n_start; i++) {
+        for (int i = n_start; i < model.n + n_start; i++) {
             tree[i] = i - n_start;
         }
     }

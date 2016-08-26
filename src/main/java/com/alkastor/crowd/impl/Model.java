@@ -3,7 +3,6 @@ package com.alkastor.crowd.impl;
 import com.alkastor.crowd.CreateModel;
 import com.alkastor.crowd.EventHandling;
 import com.alkastor.crowd.EventTime;
-import com.alkastor.crowd.calculation.Direct;
 import com.alkastor.crowd.model.Ball;
 import com.alkastor.crowd.model.Cell;
 import com.alkastor.crowd.model.Heap;
@@ -14,12 +13,15 @@ public class Model {
 
     public int nx;
     public int ny;
+    public int n;
+
     public Ball[] balls;
     public Cell[][] cells;
-
-    public int N;
-    public double T;
-    public double t_stack;
+    public double t;
+    private double t_stack;
+    private double delta_t_stack;
+    private int[] stack_parts;
+    private int k_stack;
 
     private EventHandling eventHandling;
     private EventTime eventTime;
@@ -27,13 +29,42 @@ public class Model {
     private Heap heap;
     private Random rm = new Random();
 
-    public Model() {
+    private Model(Builder builder) {
+        this.nx = builder.nx;
+        this.ny = builder.ny;
+        this.n = builder.n;
+
+        init();
+    }
+
+    private void init() {
         createModel = new CreateModelImpl(Model.this);
         eventHandling = new EventHandlingImpl(Model.this);
         eventTime = new EventTimeImpl(Model.this);
+        initGrid();
+        stack_parts = new int[n];
+        for (int i =0; i < n; i++) {
+            stack_parts[i] = i;
+        }
+        k_stack = n;
     }
 
-    public void initialize() {
+//    public Model(int n, int nx, int ny) {
+//        this.n = n;
+//        this.nx = nx;
+//        this.ny = ny;
+//        createModel = new CreateModelImpl(Model.this);
+//        eventHandling = new EventHandlingImpl(Model.this);
+//        eventTime = new EventTimeImpl(Model.this);
+//        initGrid();
+//        stack_parts = new int[n];
+//        for (int i =0; i < n; i++) {
+//            stack_parts[i] = i;
+//        }
+//        k_stack = n;
+//    }
+
+    public void initGrid() {
         if (nx == 0 || ny == 0)
             throw new Error();
         cells = new Cell[nx][ny];
@@ -44,7 +75,7 @@ public class Model {
         }
         balls = createModel.GetBalls(cells);
         heap = new Heap(Model.this);
-        for (int i = 1; i < N; i++) {
+        for (int i = 1; i < n; i++) {
             eventTime.getEventTime(balls[i]);
             heap.insertBall(i);
         }
@@ -62,18 +93,41 @@ public class Model {
     }
 
     public void simulate() {
-        int id = heap.getMin();
-        if (balls[id].event == 1) {
-            eventHandling.handleCollisionExPartsOutside(balls[id]);
-        } else if (balls[id].event == 2) {
-            eventHandling.handleCollisionExPartsInside(balls[id]);
-        } else if (balls[id].event == 3) {
-            eventHandling.handleCollisionKernels(balls[id]);
-        } else if (balls[id].event == 11) {
-            eventHandling.handleCrossing(balls[id]);
+        boolean ind_from = false;
+        int ic = heap.getMin();
+        int ip;
+        if (k_stack > 0) {
+            if (/*balls[ic].on_stack &&*/ balls[ic].t >= t_stack) {
+                ind_from = true;
+                ip = stack_parts[k_stack - 1];
+                from_stack(ip);
+                eventTime.getEventTime(balls[ip]);
+                heap.insertBall(ip);
+                t_stack = balls[ic].t + delta_t_stack;
+
+                step(balls[ip]);
+            }
         }
-        if (Direct.is_speed)
-            correct_speed(id);
+
+
+        if (!ind_from) {
+            step(balls[ic]);
+        }
+//        if (Direct.is_speed) {
+//            correct_speed(ic);
+//        }
+    }
+
+    private void step(Ball ball) {
+        if (ball.event == 1) {
+            eventHandling.handleCollisionExPartsOutside(ball);
+        } else if (ball.event == 2) {
+            eventHandling.handleCollisionExPartsInside(ball);
+        } else if (ball.event == 3) {
+            eventHandling.handleCollisionKernels(ball);
+        } else if (ball.event == 11) {
+            eventHandling.handleCrossing(ball);
+        }
     }
 
     public void correct_speed(int ib) {
@@ -86,6 +140,7 @@ public class Model {
     }
 
     public void to_stack(int ib) {
+        stack_parts[k_stack++] = ib;
         int mm;
         boolean ind = false;
         balls[ib].t_loc = 0;
@@ -104,6 +159,7 @@ public class Model {
     }
 
     public void from_stack(int ib) {
+        k_stack--;
         double a, c, fi, fj, x, y;
         balls[ib].on_stack = false;
         a = rm.nextDouble();
@@ -119,8 +175,28 @@ public class Model {
         balls[ib].vx = Math.sin(fi) * Math.cos(fj) * (1 / Math.sqrt(balls[ib].massa));
         balls[ib].vy = Math.cos(fi) * Math.cos(fj) * (1 / Math.sqrt(balls[ib].massa));
         balls[ib].numNeighbor = 0;
-        balls[ib].t_loc = T;
+        balls[ib].t_loc = t;
         balls[ib].t = 10e20;
         cells[balls[ib].i][balls[ib].j].addBall(ib);
+    }
+
+    public double getT() {
+        return t;
+    }
+
+    public static class Builder {
+        private final int nx;
+        private final int ny;
+        private final int n;
+
+        public Builder(int nx, int ny, int n) {
+            this.nx = nx;
+            this.ny = ny;
+            this.n = n;
+        }
+
+        public Model build() {
+            return new Model(this);
+        }
     }
 }

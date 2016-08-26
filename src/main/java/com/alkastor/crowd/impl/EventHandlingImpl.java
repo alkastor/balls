@@ -18,7 +18,7 @@ public class EventHandlingImpl implements EventHandling {
     public void handleCollisionExPartsOutside(Ball ic) {
         Ball jc = model.balls[ic.next];
         if (jc.event == 1 && jc.next == ic.id) {
-            model.T = ic.t;
+            model.t = ic.t;
             ic.move();
             jc.move();
 
@@ -30,7 +30,7 @@ public class EventHandlingImpl implements EventHandling {
     public void handleCollisionExPartsInside(Ball ic) {
         Ball jc = model.balls[ic.next];
         if (jc.event == 2 && jc.next == ic.id) {
-            model.T = ic.t;
+            model.t = ic.t;
             ic.move();
             jc.move();
             StaticEventHandling.elasticReflection(ic, jc);
@@ -41,7 +41,7 @@ public class EventHandlingImpl implements EventHandling {
     public void handleCollisionKernels(Ball ic) {
         Ball jc = model.balls[ic.next];
         if (jc.event == 3 && jc.next == ic.id) {
-            model.T = ic.t;
+            model.t = ic.t;
             ic.move();
             jc.move();
             StaticEventHandling.elasticReflection(ic, jc);
@@ -51,7 +51,7 @@ public class EventHandlingImpl implements EventHandling {
 
     public void handleCrossing(Ball ic) {
         int inew, jnew;
-        model.T = ic.t;
+        model.t = ic.t;
         ic.move();
         inew = ic.i;
         jnew = ic.j;

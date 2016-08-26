@@ -29,16 +29,12 @@ public class MainFrame extends JFrame {
         setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         mainMenu.add(menu);
         menu.add(settings);
-        model = new Model();
-        model.nx = 100;
-        model.ny = 100;
-        model.N = 1500;
-        model.initialize();
+        model = new Model.Builder(50, 50, 500).build();
         comp = new Compp(model);
         timer = new Timer(50, new ActionListener() {
 
             public void actionPerformed(ActionEvent arg0) {
-                for (int i = 0; i < model.N; i++) {
+                for (int i = 0; i < model.n; i++) {
                     model.simulate();
                 }
                 Direct.sum_v_direct(model.cells, model.balls, model.nx, model.ny);

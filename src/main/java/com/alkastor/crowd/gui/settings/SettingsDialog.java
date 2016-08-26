@@ -35,9 +35,9 @@ public class SettingsDialog extends JDialog {
         setSize(280, 200);
         setTitle("Settings");
         setLayout(new GridLayout(8, 1));
-        add(new JLabel("         N"));
+        add(new JLabel("         n"));
         add(txN);
-        txN.setText(mainFrame.model.N + "");
+        txN.setText(mainFrame.model.n + "");
         add(new JLabel("         nx"));
         add(txNx);
         txNx.setText(mainFrame.model.nx + "");
@@ -68,7 +68,7 @@ public class SettingsDialog extends JDialog {
             }
         });
         add(new JCheckBox());
-        add(new JLabel("    delta T event"));
+        add(new JLabel("    delta t event"));
         add(txT);
         txT.setText(mainFrame.timer.getDelay() + "");
         add(btInc);
@@ -103,10 +103,10 @@ public class SettingsDialog extends JDialog {
         add(btUpdate);
         btUpdate.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                mainFrame.model.N = Integer.parseInt(txN.getText());
+                mainFrame.model.n = Integer.parseInt(txN.getText());
                 mainFrame.model.nx = Integer.parseInt(txNx.getText());
                 mainFrame.model.ny = Integer.parseInt(txNy.getText());
-                mainFrame.model.initialize();
+                mainFrame.model.initGrid();
                 mainFrame.comp.update(mainFrame.comp.getGraphics());
             }
         });

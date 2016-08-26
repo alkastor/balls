@@ -1,7 +1,6 @@
 package com.alkastor.crowd.impl;
 
 import com.alkastor.crowd.CreateModel;
-import com.alkastor.crowd.calculation.Direct;
 import com.alkastor.crowd.model.Ball;
 import com.alkastor.crowd.model.Cell;
 
@@ -16,21 +15,23 @@ public class CreateModelImpl implements CreateModel {
 
     public CreateModelImpl(Model model) {
         this.model = model;
-        Direct.clear_v_direct(model.cells, model.nx, model.ny);
+//        Direct.clear_v_direct(model.cells, model.nx, model.ny);
     }
 
     public Ball[] GetBalls(Cell[][] cells) {
-        model.N++;
-        balls = new Ball[model.N + 1];
+        model.n++;
+        balls = new Ball[model.n + 1];
         balls[0] = new Ball();
         balls[0].t = 1e20;
         balls[0].id = 0;
         balls[0].round = (int) 1e10;
+        balls[0].on_stack = false;
+        balls[0].event = 11;
         double x = 0.5;
         double y = 0.5;
         double a, c, fi, fj;
         ///////
-        for (int i = 1; i < model.N; i++) {
+        for (int i = 1; i < model.n; i++) {
             balls[i] = new Ball();
             balls[i].id = i;
             balls[i].x = x;
@@ -44,6 +45,7 @@ public class CreateModelImpl implements CreateModel {
             balls[i].t_loc = 0;
             balls[i].t = i;
             balls[i].event = 0;
+            balls[i].on_stack = true;
             a = rm.nextDouble();
             c = rm.nextDouble();
             fi = a * 2 * Math.PI;
@@ -52,12 +54,6 @@ public class CreateModelImpl implements CreateModel {
             balls[i].vy = Math.cos(fi) * Math.cos(fj) * (1 / Math.sqrt(balls[i].massa));
             balls[i].numNeighbor = 0;
             balls[i].color = Color.orange;
-            cells[balls[i].i][balls[i].j].addBall(i);
-            x += 1;
-            if ((int) x == model.nx) {
-                x = 0.5;
-                y += 1;
-            }
         }
         return balls;
     }
@@ -72,7 +68,7 @@ public class CreateModelImpl implements CreateModel {
         double y = 30;
         int kk = 0;
         boolean b = false;
-        for (int i = model.N - 20; i < model.N; i++) {
+        for (int i = model.n - 20; i < model.n; i++) {
             balls[i] = new Ball();
             balls[i].id = i;
             balls[i].x = x;

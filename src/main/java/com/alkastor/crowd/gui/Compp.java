@@ -33,9 +33,9 @@ public class Compp extends JComponent {
         kx = (kx > ky) ? kx : ky;
         ky = kx;
         gbuf.clearRect(0, 0, getWidth(), getHeight());
-        for (int i = 1; i < model.N; i++) {
-            double x = model.balls[i].getCurX(model.T - model.balls[i].t_loc);
-            double y = model.balls[i].getCurY(model.T - model.balls[i].t_loc);
+        for (int i = 1; i < model.n; i++) {
+            double x = model.balls[i].getCurX(model.getT() - model.balls[i].t_loc);
+            double y = model.balls[i].getCurY(model.getT() - model.balls[i].t_loc);
             gbuf.setColor(model.balls[i].color);
             gbuf.fillOval((int) (x * kx - model.balls[i].r1 * kx), (int) (y * ky - model.balls[i].r1 * ky), (int) (model.balls[i].r1 * kx * 2), (int) (model.balls[i].r1 * ky * 2));
         }
