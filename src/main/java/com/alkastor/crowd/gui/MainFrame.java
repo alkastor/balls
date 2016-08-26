@@ -11,7 +11,7 @@ import java.awt.event.ActionListener;
 
 
 public class MainFrame extends JFrame {
-    public Model model;
+    private Model model;
     public Timer timer;
     public Compp comp;
 
@@ -29,7 +29,7 @@ public class MainFrame extends JFrame {
         setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         mainMenu.add(menu);
         menu.add(settings);
-        model = new Model.Builder(50, 50, 500).build();
+        model = new Model(500, 50, 50);
         comp = new Compp(model);
         timer = new Timer(50, new ActionListener() {
 
@@ -43,5 +43,13 @@ public class MainFrame extends JFrame {
         });
         add(comp);
         setJMenuBar(mainMenu);
+    }
+
+    public Model getModel() {
+        return model;
+    }
+
+    public void setModel(Model model) {
+        this.model = model;
     }
 }

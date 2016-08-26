@@ -2,6 +2,7 @@ package com.alkastor.crowd.gui.settings;
 
 import com.alkastor.crowd.calculation.Direct;
 import com.alkastor.crowd.gui.MainFrame;
+import com.alkastor.crowd.impl.Model;
 
 import javax.swing.*;
 import java.awt.*;
@@ -37,13 +38,13 @@ public class SettingsDialog extends JDialog {
         setLayout(new GridLayout(8, 1));
         add(new JLabel("         n"));
         add(txN);
-        txN.setText(mainFrame.model.n + "");
+        txN.setText(mainFrame.getModel().n + "");
         add(new JLabel("         nx"));
         add(txNx);
-        txNx.setText(mainFrame.model.nx + "");
+        txNx.setText(mainFrame.getModel().nx + "");
         add(new JLabel("         ny"));
         add(txNy);
-        txNy.setText(mainFrame.model.ny + "");
+        txNy.setText(mainFrame.getModel().ny + "");
         add(is_grid);
         is_grid.setSelected(Direct.is_grid);
         is_grid.addActionListener(new ActionListener() {
@@ -103,10 +104,11 @@ public class SettingsDialog extends JDialog {
         add(btUpdate);
         btUpdate.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                mainFrame.model.n = Integer.parseInt(txN.getText());
-                mainFrame.model.nx = Integer.parseInt(txNx.getText());
-                mainFrame.model.ny = Integer.parseInt(txNy.getText());
-                mainFrame.model.initGrid();
+                final int n = Integer.parseInt(txN.getText());
+                final int nx = Integer.parseInt(txNx.getText());
+                final int ny = Integer.parseInt(txNy.getText());
+                final Model model = new Model(n, nx, ny);
+                mainFrame.setModel(model);
                 mainFrame.comp.update(mainFrame.comp.getGraphics());
             }
         });

@@ -11,8 +11,8 @@ import java.util.Random;
 
 public class Model {
 
-    public int nx;
-    public int ny;
+    public final int nx;
+    public final int ny;
     public int n;
 
     public Ball[] balls;
@@ -29,10 +29,10 @@ public class Model {
     private Heap heap;
     private Random rm = new Random();
 
-    private Model(Builder builder) {
-        this.nx = builder.nx;
-        this.ny = builder.ny;
-        this.n = builder.n;
+    public Model(int n, int nx, int ny) {
+        this.n = n;
+        this.nx = nx;
+        this.ny = ny;
 
         init();
     }
@@ -49,22 +49,7 @@ public class Model {
         k_stack = n;
     }
 
-//    public Model(int n, int nx, int ny) {
-//        this.n = n;
-//        this.nx = nx;
-//        this.ny = ny;
-//        createModel = new CreateModelImpl(Model.this);
-//        eventHandling = new EventHandlingImpl(Model.this);
-//        eventTime = new EventTimeImpl(Model.this);
-//        initGrid();
-//        stack_parts = new int[n];
-//        for (int i =0; i < n; i++) {
-//            stack_parts[i] = i;
-//        }
-//        k_stack = n;
-//    }
-
-    public void initGrid() {
+    private void initGrid() {
         if (nx == 0 || ny == 0)
             throw new Error();
         cells = new Cell[nx][ny];
@@ -97,7 +82,7 @@ public class Model {
         int ic = heap.getMin();
         int ip;
         if (k_stack > 0) {
-            if (/*balls[ic].on_stack &&*/ balls[ic].t >= t_stack) {
+            if (balls[ic].t >= t_stack) {
                 ind_from = true;
                 ip = stack_parts[k_stack - 1];
                 from_stack(ip);
@@ -182,21 +167,5 @@ public class Model {
 
     public double getT() {
         return t;
-    }
-
-    public static class Builder {
-        private final int nx;
-        private final int ny;
-        private final int n;
-
-        public Builder(int nx, int ny, int n) {
-            this.nx = nx;
-            this.ny = ny;
-            this.n = n;
-        }
-
-        public Model build() {
-            return new Model(this);
-        }
     }
 }
