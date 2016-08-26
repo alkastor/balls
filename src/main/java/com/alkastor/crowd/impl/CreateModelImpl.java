@@ -22,7 +22,7 @@ public class CreateModelImpl implements CreateModel {
         model.n++;
         balls = new Ball[model.n + 1];
         balls[0] = new Ball();
-        balls[0].t = 1e20;
+        balls[0].t = 0;
         balls[0].id = 0;
         balls[0].round = (int) 1e10;
         balls[0].on_stack = false;

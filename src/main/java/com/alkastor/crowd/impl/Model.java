@@ -43,10 +43,9 @@ public class Model {
         eventTime = new EventTimeImpl(Model.this);
         initGrid();
         stack_parts = new int[n];
-        for (int i =0; i < n; i++) {
-            stack_parts[i] = i;
+        for (int i = 0; i < n - 1 ; i++) {
+            to_stack(i);
         }
-        k_stack = n;
     }
 
     private void initGrid() {
@@ -132,7 +131,7 @@ public class Model {
         balls[ib].t = 10e20;
         balls[ib].on_stack = true;
         mm = 0;
-        while (ind || (mm >= cells[balls[ib].i][balls[ib].j].numBalls)) {
+        while (ind || (mm > cells[balls[ib].i][balls[ib].j].numBalls)) {
             ind = cells[balls[ib].i][balls[ib].j].balls[mm] == ib;
             if (ind) {
                 cells[balls[ib].i][balls[ib].j].balls[mm] = cells[balls[ib].i][balls[ib].j].balls[cells[balls[ib].i][balls[ib].j].numBalls];
@@ -143,7 +142,7 @@ public class Model {
         }
     }
 
-    public void from_stack(int ib) {
+    private void from_stack(int ib) {
         k_stack--;
         double a, c, fi, fj, x, y;
         balls[ib].on_stack = false;
