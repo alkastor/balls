@@ -23,10 +23,7 @@ public class MainFrame extends JFrame {
     private JMenuItem settings = new JMenuItem(showSettings);
 
     public MainFrame() {
-        setSize(Toolkit.getDefaultToolkit().getScreenSize());
-        setLocationByPlatform(true);
-        setVisible(true);
-        setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
+        setupWindow();
         mainMenu.add(menu);
         menu.add(settings);
         model = new Model(500, 50, 50);
@@ -34,9 +31,7 @@ public class MainFrame extends JFrame {
         timer = new Timer(50, new ActionListener() {
 
             public void actionPerformed(ActionEvent arg0) {
-                for (int i = 0; i < model.n; i++) {
-                    model.simulate();
-                }
+                model.simulate();
                 Direct.sum_v_direct(model.cells, model.balls, model.nx, model.ny);
                 comp.update(comp.getGraphics());
             }
@@ -51,5 +46,12 @@ public class MainFrame extends JFrame {
 
     public void setModel(Model model) {
         this.model = model;
+    }
+
+    private void setupWindow() {
+        setSize(Toolkit.getDefaultToolkit().getScreenSize());
+        setLocationByPlatform(true);
+        setVisible(true);
+        setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
     }
 }
